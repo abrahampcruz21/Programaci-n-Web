@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SIGATAAAngular
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.13.
@@ -57,3 +58,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+=======
+# PROYECTO SIGATAA
+El objetivo de este repositorio, es para mostrar mis avances y mejoras sobre desarrollo de páginas o apps web que vaya a desarrollar en lo que me queda de semestre.
+>>>>>>> 5b17ecf590c83ca639268ac18e77dc4a9453455b
