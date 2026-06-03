@@ -1,3 +1,9 @@
+const mongoose = require('mongoose');
+
+// Esto conecta Node con la base de datos de MongoDB llamada sigataa_db
+mongoose.connect('mongodb://127.0.0.1:27017/sigataa_db')
+  .then(() => console.log('¡Conectado con éxito a MongoDB! '))
+  .catch((error) => console.error('Error al conectar a MongoDB:', error));
 const express = require('express');
 const app = express();
 const PORT = 3000;
