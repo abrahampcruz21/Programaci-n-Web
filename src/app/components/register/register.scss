@@ -1,0 +1,175 @@
+:host {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.3)), 
+              url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  
+  /* Variables exclusivas de la pantalla de Registro */
+  --input-bg: rgba(255, 255, 255, 0.35); 
+  --input-text: #1E293B;                 
+  --btn-cyan: #38BDF8;                   
+  --btn-cyan-hover: #0EA5E9;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(3px);
+  z-index: 0;
+}
+
+.header-title-left {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #000000; 
+  z-index: 2;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 1;
+
+  /* Tarjeta de registro con efecto cristal */
+  .card {
+    width: 100%;
+    max-width: 620px; 
+    background: rgba(255, 255, 255, 0.25); 
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden; 
+
+    .card-banner {
+      width: 85%;
+      background: linear-gradient(90deg, #22D3EE 0%, #0369A1 100%); 
+      color: #1E293B;
+      text-align: center;
+      padding: 8px 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 5px;
+      
+      .logo {
+        width: 150px;
+        height: auto;
+        object-fit: contain;
+      }
+    }
+
+    /* Formulario e Inputs */
+    .register-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px; 
+
+      input {
+        width: 100%;
+        background: var(--input-bg);
+        border: none;
+        outline: none;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        color: var(--input-text);
+        text-align: center; 
+        font-family: 'Inter', sans-serif;
+        transition: background 0.3s ease;
+
+        &::placeholder {
+          color: #475569; 
+          font-weight: 500;
+        }
+
+        &:focus {
+          background: rgba(255, 255, 255, 0.5); 
+        }
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+
+        .btn-submit {
+          background: var(--btn-cyan);
+          color: #0F172A; 
+          border: none;
+          padding: 12px 45px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 1.05rem;
+          cursor: pointer;
+          box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+          transition: transform 0.2s ease, background 0.2s ease;
+
+          &:hover {
+            background: var(--btn-cyan-hover);
+            transform: scale(1.02); 
+          }
+        }
+      }
+    }
+  }
+}
+
+.footer-banner {
+  width: fit-content;
+  max-width: 90%;
+  margin: 0 auto 30px auto; 
+  background: rgba(255, 255, 255, 0.85); 
+  color: #64748B; 
+  padding: 10px 30px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+  .header-title-left {
+    position: relative;
+    top: 20px;
+    left: 0;
+    text-align: center;
+    margin-bottom: -20px;
+  }
+  .container {
+    .card {
+      padding: 30px 20px;
+      .card-banner { width: 100%; }
+    }
+  }
+}
