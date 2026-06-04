@@ -17,6 +17,97 @@
   --btn-cyan-hover: #0EA5E9;
 }
 
+/* Estilos para el fondo oscuro difuminado detrás del modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4); /* Fondo oscuro translúcido */
+  backdrop-filter: blur(8px); /* Difumina toda la pantalla de atrás */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Asegura que flote por encima de absolutamente todo */
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* La tarjeta emergente estilo Liquid Glass */
+.modal-card {
+  width: 90%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.15); /* Cristal traslúcido */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde brillante */
+  backdrop-filter: blur(25px); /* Efecto vidrio grueso */
+  border-radius: 24px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  .modal-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #22D3EE, #0EA5E9);
+    color: #0F172A;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+  }
+
+  h2 {
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  p {
+    color: #E2E8F0;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* El botón de acción brillante */
+  .btn-modal-link {
+    width: 100%;
+    text-decoration: none;
+    background: #38BDF8;
+    color: #0F172A;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    transition: all 0.2s ease;
+    margin-top: 10px;
+
+    &:hover {
+      background: #0EA5E9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+    }
+  }
+}
+
+/* Animaciones suaves para la aparición */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -171,5 +262,117 @@
       padding: 30px 20px;
       .card-banner { width: 100%; }
     }
+  }
+}
+
+/* Contenedor principal */
+.custom-select-wrapper {
+  width: 100%;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+}
+
+/* El botón que simula la barra del select (IGUALADO AL RESTO DE INPUTS) */
+.select-trigger {
+  width: 100%;
+  
+  /* 🎨 COLOR Y TRANSPARENCIA IDÉNTICA A TUS INPUTS */
+  background: rgba(255, 255, 255, 0.25); /* Cambia este valor si tus inputs son un poco más oscuros, ej: rgba(200, 200, 200, 0.3) */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Por si tus inputs llevan un borde sutil */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  
+  outline: none;
+  padding: 14px 20px;
+  border-radius: 12px; /* Mismo redondeado */
+  
+  /* 📝 TIPOGRAFÍA Y TEXTO IGUALADO */
+  font-size: 1.05rem;
+  color: #4A5568; /* El tono gris de tus placeholders actuales */
+  font-family: inherit; /* Hereda la misma fuente de la tarjeta */
+  
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Suave sombra interna si la tienen */
+
+  /* Efecto al pasar el mouse o abrirlo */
+  &:focus, &:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  /* La flechita de la derecha */
+  .arrow {
+    position: absolute;
+    right: 20px;
+    font-size: 0.8rem;
+    color: #4A5568; /* Mismo color que el texto */
+    transition: transform 0.2s ease;
+    
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+//* 🔮 LA LISTA FLOTANTE CORREGIDA (MÁS LEGIBLE Y SIN CORTES) 🔮 */
+.select-options {
+  position: absolute;
+  top: calc(100% + 8px); /* Separa la lista un poquito del botón */
+  left: 0;
+  width: 100%;
+  
+  /* 🎨 CORRECCIÓN DE OPACIDAD: Más sólido para bloquear los inputs de atrás, pero mantiene el blur */
+  background: rgba(30, 41, 59, 0.85); /* Fondo oscuro esmerilado premium (Slate 800) */
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(25px); 
+  -webkit-backdrop-filter: blur(25px);
+  
+  border-radius: 16px;
+  padding: 8px 0;
+  margin: 0;
+  list-style: none;
+  
+  /* 🔝 PRIORIDAD VISUAL: Flota por encima de la tarjeta y del botón registrarse */
+  z-index: 99; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  
+  /* 📐 CORRECCIÓN DE TAMAÑO: Máximo 220px de alto para que no se desborde de la pantalla */
+  max-height: 220px; 
+  overflow-y: auto; /* Si no caben, genera un scroll interno limpio */
+  animation: fadeInOptions 0.2s ease-out;
+
+  /* Estilización de la barra de scroll interna para que se vea moderna y delgada */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  li {
+    padding: 12px 20px;
+    
+    /* 📝 TEXTO CLARO: Para que resalte perfectamente sobre el fondo oscuro */
+    color: #F8FAFC; 
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    /* Efecto al pasar el cursor sobre cada carrera */
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #38BDF8; /* Cambia a tu azul brillante característico al seleccionarlo */
+    }
+
+    /* Redondeado para las esquinas */
+    &:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
+    &:last-child { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
   }
 }
