@@ -1,25 +1,18 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-=======
 import { RouterLink } from '@angular/router';
->>>>>>> 3bf1c7c82bbb9f4580b78a7afa2a738650a4df83
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-<<<<<<< HEAD
-  imports: [CommonModule, FormsModule],
-=======
-  imports: [RouterLink],
->>>>>>> 3bf1c7c82bbb9f4580b78a7afa2a738650a4df83
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrls: ['./register.scss']
 })
 export class RegisterComponent {
-<<<<<<< HEAD
+  // TU LÓGICA: Campos para guardar en MongoDB
   datos = {
     nombreCompleto: '',
     correoElectronico: '',
@@ -28,12 +21,33 @@ export class RegisterComponent {
     carrera: ''
   };
 
+  
+  mostrarModal: boolean = false;
+  menuAbierto: boolean = false;
+  carreraSeleccionada: string = '';
+
   constructor(private authService: AuthService) {}
 
-  alEnviarFormulario() {
+  
+  toggleDesplegable() {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  seleccionarCarrera(carrera: string) {
+    this.carreraSeleccionada = carrera;
+    this.datos.carrera = carrera; // Vincula la carrera seleccionada a tus datos
+    this.menuAbierto = false;
+    console.log("Carrera seleccionada:", this.carreraSeleccionada);
+  }
+
+  
+  registrarUsuario() {
+    console.log("Intentando registrar usuario con datos:", this.datos);
+    
     this.authService.registrarUsuario(this.datos).subscribe({
       next: (respuesta) => {
-        alert(respuesta.mensaje);
+        console.log("Usuario registrado con éxito en MongoDB", respuesta);
+        this.mostrarModal = true; 
       },
       error: (err) => {
         alert(err.error?.mensaje || 'Error al registrar');
@@ -41,27 +55,3 @@ export class RegisterComponent {
     });
   }
 }
-=======
-  //VARIABLES DEL COMPONENTE
-  mostrarModal: boolean = false;
-  menuAbierto: boolean = false;
-  carreraSeleccionada: string = ''; // <-- ¡Importante declararla aquí!
-
-  //FUNCIONES DEL MENÚ DESPLEGABLE 
-  toggleDesplegable() {
-    this.menuAbierto = !this.menuAbierto;
-  }
-
-  seleccionarCarrera(carrera: string) {
-    this.carreraSeleccionada = carrera;
-    this.menuAbierto = false;
-    console.log("Carrera seleccionada:", this.carreraSeleccionada);
-  }
-
-  //LOGICÁ DE REGISTRO 
-  registrarUsuario() {
-    console.log("Usuario registrado");  
-    this.mostrarModal = true;
-  }
-}
->>>>>>> 3bf1c7c82bbb9f4580b78a7afa2a738650a4df83
