@@ -11,19 +11,60 @@
             <img src="img/logo.png" alt="Logo SIGATAA" class="logo">
         </div>
 
+        <!-- Se añade el evento de envío aquí para enlazarlo con tu lógica -->
         <form class="register-form" (ngSubmit)="alEnviarFormulario()">
-            
             <input type="text" name="nombre" placeholder="Nombre Completo" [(ngModel)]="datos.nombreCompleto" required>
+            <input type="text" name="matricula" placeholder="Matrícula / No. de Empleado" [(ngModel)]="datos.matricula" required>
             <input type="email" name="email" placeholder="Correo Electrónico" [(ngModel)]="datos.correoElectronico" required>
-            <input type="number" name="matricula" placeholder="Matrícula" [(ngModel)]="datos.matricula" required>
+            
+            <div class="custom-select-wrapper">
+                <button type="button" class="select-trigger" (click)="toggleDesplegable()">
+                    {{ carreraSeleccionada ? carreraSeleccionada : 'Selecciona tu Carrera o Departamento' }}
+                    <span class="arrow" [class.open]="menuAbierto">▼</span>
+                </button>
+
+                @if (menuAbierto) {
+                    <ul class="select-options">
+                        <li (click)="seleccionarCarrera('Ingeniería en Computación')">Ingeniería en Computación</li>
+                        <li (click)="seleccionarCarrera('Ingeniería Industrial')">Ingeniería Industrial</li>
+                        <li (click)="seleccionarCarrera('Ingeniería Petrolera')">Ingeniería Petrolera</li>
+                        <li (click)="seleccionarCarrera('Ingeniería en Energías Renovables')">Ingeniería en Energías Renovables</li>
+                        <li (click)="seleccionarCarrera('Ingeniería Química')">Ingeniería Química</li>
+                        <li (click)="seleccionarCarrera('Licenciatura en Matemáticas Aplicadas')">Licenciatura en Matemáticas Aplicadas</li>
+                        <li (click)="seleccionarCarrera('Ingeniería en Diseño')">Ingeniería en Diseño</li>
+                    </ul>
+                }
+            </div>
+
             <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="datos.contrasena" required>
             
             <div class="button-container">
-                <button type="submit" class="btn btn-submit">Registrarse</button>
+                <!-- Se cambia a type="submit" para que procese el formulario correctamente -->
+                <button type="submit" class="btn btn-submit">
+                    Registrarse
+                </button>
             </div>
         </form>
+
+        <a routerLink="/" style="color: #38BDF8; text-decoration: none; font-size: 0.9rem; margin-top: 10px; font-weight: 500;">
+            ← Volver al Inicio
+        </a>
     </main>
 </div> 
+
+@if (mostrarModal) {
+    <div class="modal-backdrop">
+        <div class="modal-card">
+            <div class="modal-icon">✓</div>
+            <h2>¡Registro exitoso!</h2>
+            <p>Tu cuenta ha sido creada correctamente en el sistema.</p>
+            
+            <a routerLink="/login" class="btn-modal-link">
+                Toca aquí para iniciar sesión
+            </a>
+        </div>
+    </div>
+}
 
 <footer class="footer-banner">
     &copy; 2026 SIGATAA.
