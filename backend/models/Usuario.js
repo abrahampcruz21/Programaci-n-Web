@@ -1,30 +1,35 @@
 const mongoose = require('mongoose');
 
-const usuarioSchema = new mongoose.Schema({
-    matricula: {
-        type: String,
-        required: true,
-        unique: true, // Para que las matrículas no se dupliquen
-        trim: true
-    },
+// Este es el molde estricto para registrar usuarios en el SIGATAA
+const UsuarioSchema = new mongoose.Schema({
     nombreCompleto: {
         type: String,
         required: true
     },
-    correo: {
+    correoElectronico: {
         type: String,
         required: true,
-        unique: true
+        unique: true // No se pueden repetir correos
+    },
+    matricula: {
+        type: String,
+        required: true,
+        unique: true // Cada matrícula es única (alumnos o profes)
     },
     contrasena: {
         type: String,
         required: true
     },
+    carrera: {
+        type: String,
+        required: false // Es opcional por si el usuario es un Profesor o Admin
+    },
     rol: {
         type: String,
         required: true,
-        enum: ['alumno', 'profesor', 'administrador'] // Los 3 accesos de tu PDF
+        default: 'alumno' // Si no se define, por defecto es alumno
     }
 });
 
-module.exports = mongoose.model('Usuario', usuarioSchema);
+// Guardamos el molde con el nombre 'Usuario'
+module.exports = mongoose.model('Usuario', UsuarioSchema);

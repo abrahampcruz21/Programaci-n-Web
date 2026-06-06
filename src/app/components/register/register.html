@@ -1,6 +1,5 @@
 <div class="overlay"></div>
 
-
 <div class="container">
     <main class="card">
 
@@ -12,11 +11,12 @@
             <img src="img/logo.png" alt="Logo SIGATAA" class="logo">
         </div>
 
-        <form class="register-form" (submit)="$event.preventDefault()">
-            <input type="text" name="nombre" placeholder="Nombre Completo" required>
-            <input type="email" name="email" placeholder="Correo Electrónico" required>
-            <input type="number" name="matricula" placeholder="Matrícula" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
+        <form class="register-form" (ngSubmit)="alEnviarFormulario()">
+            
+            <input type="text" name="nombre" placeholder="Nombre Completo" [(ngModel)]="datos.nombreCompleto" required>
+            <input type="email" name="email" placeholder="Correo Electrónico" [(ngModel)]="datos.correoElectronico" required>
+            <input type="number" name="matricula" placeholder="Matrícula" [(ngModel)]="datos.matricula" required>
+            <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="datos.contrasena" required>
             
             <div class="button-container">
                 <button type="submit" class="btn btn-submit">Registrarse</button>
