@@ -6,6 +6,14 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  styleUrls: ['./login.scss'],
 })
-export class LoginComponent {}
+export class LoginComponent {
+  iniciarSesion(email: string, password: string) {
+    if (!email || !password) {
+      alert("Por favor, completa ambos campos.");
+      return;
+    } 
+    console.log("Campos completos. Iniciando sesión...");
+  }
+}

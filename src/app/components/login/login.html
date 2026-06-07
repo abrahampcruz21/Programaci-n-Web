@@ -12,13 +12,14 @@
         </div>
 
         <form class="login-form" (submit)="$event.preventDefault()">
-            <input type="number" name="matricula" placeholder="Matrícula" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="number" #user name="Usuario" placeholder="Matrícula o correo electrónico" required>
+            <input type="password" #pass name="password" placeholder="Contraseña" required>
             
             <div class="button-container">
                 <button type="submit" class="btn btn-submit">Ingresar</button>
                 <a routerLink="/" style="color: #38BDF8; text-decoration: none; font-size: 0.9rem; margin-top: 10px; font-weight: 500;">
-                    ← Volver al Inicio</a>
+                    ← Volver al Inicio
+                </a>
             </div>
         </form>
     </main>

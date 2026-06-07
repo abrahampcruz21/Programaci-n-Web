@@ -12,10 +12,10 @@
         </div>
 
         <form class="register-form">
-            <input type="text" name="nombre" placeholder="Nombre Completo" required>
-            <input type="text" name="matricula" placeholder="Matrícula / No. de Empleado" required>
-            <input type="email" name="email" placeholder="Correo Electrónico" required>
-            
+            <input type="text" #nombre name="nombre" placeholder="Nombre Completo" required>
+            <input type="text" #matricula name="matricula" placeholder="Matrícula / No. de Empleado" required>
+            <input type="email" #email name="email" placeholder="Correo Electrónico" required>
+
             <div class="custom-select-wrapper">
                 <button type="button" class="select-trigger" (click)="toggleDesplegable()">
                     {{ carreraSeleccionada ? carreraSeleccionada : 'Selecciona tu Carrera o Departamento' }}
@@ -35,10 +35,11 @@
                 }
             </div>
 
-            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="password" #password name="password" placeholder="Contraseña" required>
             
             <div class="button-container">
-                <button type="button" class="btn btn-submit" (click)="registrarUsuario()">
+                <button type="button" class="btn btn-submit" 
+                        (click)="registrarUsuario(nombre.value, matricula.value, email.value, password.value)">
                     Registrarse
                 </button>
             </div>
