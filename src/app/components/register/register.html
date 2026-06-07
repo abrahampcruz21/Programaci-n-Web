@@ -11,10 +11,11 @@
             <img src="img/logo.png" alt="Logo SIGATAA" class="logo">
         </div>
 
-        <form class="register-form">
-            <input type="text" #nombre name="nombre" placeholder="Nombre Completo" required>
-            <input type="text" #matricula name="matricula" placeholder="Matrícula / No. de Empleado" required>
-            <input type="email" #email name="email" placeholder="Correo Electrónico" required>
+        <form class="register-form" (ngSubmit)="alEnviarFormulario()">
+            
+            <input type="text" name="nombre" placeholder="Nombre Completo" [(ngModel)]="datos.nombreCompleto" required>
+            <input type="text" name="matricula" placeholder="Matrícula / No. de Empleado" [(ngModel)]="datos.matricula" required>
+            <input type="email" name="email" placeholder="Correo Electrónico" [(ngModel)]="datos.correoElectronico" required>
 
             <div class="custom-select-wrapper">
                 <button type="button" class="select-trigger" (click)="toggleDesplegable()">
@@ -35,11 +36,10 @@
                 }
             </div>
 
-            <input type="password" #password name="password" placeholder="Contraseña" required>
+            <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="datos.contrasena" required>
             
             <div class="button-container">
-                <button type="button" class="btn btn-submit" 
-                        (click)="registrarUsuario(nombre.value, matricula.value, email.value, password.value)">
+                <button type="submit" class="btn btn-submit">
                     Registrarse
                 </button>
             </div>
