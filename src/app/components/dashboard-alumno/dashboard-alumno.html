@@ -1,0 +1,46 @@
+<div class="overlay"></div>
+
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <h1 class="panel-title">PANEL ALUMNOS</h1>
+        <div class="welcome-bar">
+            <span>Bienvenido, {{ nombreAlumno }}</span>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="background-watermark">
+            <img src="img/logo-unistmo.png" alt="UNISTMO Marca de Agua" class="watermark-logo">
+        </div>
+
+        <section class="info-cards-container">
+            <div class="info-card">
+                <h3>Objetivo de tu carrera</h3>
+                <p>{{ objetivoCarrera }}</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>Tu perfil de egreso</h3>
+                <p>{{ perfilEgreso }}</p>
+            </div>
+        </section>
+
+        <section class="action-buttons-container">
+            <button type="button" class="btn-action">
+                Agendar asesoría
+            </button>
+            
+            <button type="button" class="btn-action">
+                Conoce a tu tutor
+            </button>
+            
+            <button type="button" class="btn-action-primary">
+                Ver Horario Completo
+            </button>
+        </section>
+    </main>
+</div>
+
+<footer class="footer-banner">
+    &copy; 2026 SIGATAA.
+</footer>

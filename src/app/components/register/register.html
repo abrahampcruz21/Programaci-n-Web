@@ -11,12 +11,12 @@
             <img src="img/logo.png" alt="Logo SIGATAA" class="logo">
         </div>
 
-        <!-- Se añade el evento de envío aquí para enlazarlo con tu lógica -->
-        <form class="register-form" (ngSubmit)="registrarUsuario()">
+        <form class="register-form" (ngSubmit)="alEnviarFormulario()">
+            
             <input type="text" name="nombre" placeholder="Nombre Completo" [(ngModel)]="datos.nombreCompleto" required>
             <input type="text" name="matricula" placeholder="Matrícula / No. de Empleado" [(ngModel)]="datos.matricula" required>
             <input type="email" name="email" placeholder="Correo Electrónico" [(ngModel)]="datos.correoElectronico" required>
-            
+
             <div class="custom-select-wrapper">
                 <button type="button" class="select-trigger" (click)="toggleDesplegable()">
                     {{ carreraSeleccionada ? carreraSeleccionada : 'Selecciona tu Carrera o Departamento' }}
@@ -39,7 +39,6 @@
             <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="datos.contrasena" required>
             
             <div class="button-container">
-                <!-- Se cambia a type="submit" para que procese el formulario correctamente -->
                 <button type="submit" class="btn btn-submit">
                     Registrarse
                 </button>

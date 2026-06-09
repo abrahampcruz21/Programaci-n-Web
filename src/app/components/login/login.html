@@ -4,26 +4,31 @@
     <main class="card">
 
         <div class="card-banner">
-            INICIAR SESIÓN
+            INICIO DE SESIÓN
         </div>
 
         <div class="logo-section">
             <img src="img/logo.png" alt="Logo SIGATAA" class="logo">
         </div>
 
-        <form class="login-form" (submit)="$event.preventDefault()">
-            <input type="number" name="matricula" placeholder="Matrícula" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
+        <form class="login-form" (ngSubmit)="alEnviarLogin()">
             
-            <div class="button-container">
-                <button type="submit" class="btn btn-submit">Ingresar</button>
-                <a routerLink="/" style="color: #38BDF8; text-decoration: none; font-size: 0.9rem; margin-top: 10px; font-weight: 500;">
-                    ← Volver al Inicio</a>
-            </div>
+            <input type="text" name="usuario" placeholder="Matrícula o Correo Electrónico" [(ngModel)]="credenciales.usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="credenciales.contrasena" required>
+            
+            <button type="submit" class="btn-submit">
+                Ingresar
+            </button>
         </form>
+
+        <div class="login-footer-links">
+            <a routerLink="/register" style="color: #38BDF8; text-decoration: none; font-size: 0.9rem; font-weight: 500;">
+                ¿No tienes cuenta? Regístrate aquí
+            </a>
+        </div>
     </main>
-</div> 
+</div>
 
 <footer class="footer-banner">
-    &copy; 2026 SIGATAA. Todos los derechos reservados.
+    &copy; 2026 SIGATAA.
 </footer>

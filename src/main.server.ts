@@ -1,3 +1,4 @@
+// @ts-ignore - Ignorar advertencia visual de zone.js en SSR
 import 'zone.js';
 import { BootstrapContext, bootstrapApplication } from '@angular/platform-browser';
 import { App } from './app/app';

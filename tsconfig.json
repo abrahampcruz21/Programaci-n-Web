@@ -2,6 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "ignoreDeprecations": "5.0",
+    "rootDir": "./src",
     "outDir": "./out-tsc/angular",
     "forceConsistentCasingInFileNames": true,
     "strict": false,
@@ -18,11 +20,14 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
+    
     "module": "ES2022",
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
