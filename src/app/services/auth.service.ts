@@ -1,30 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  private API_URL = 'http://localhost:3000/api';
 
-  // 1. Simulador para la pantalla de Registro
+  constructor(private http: HttpClient) { }
+
+  // 1. REGISTRO AUTOMÁTICO (Guarda al alumno directamente en MongoDB)
   registrarUsuario(datos: any): Observable<any> {
-    console.log('--- [Simulador AuthService] Enviando datos a MongoDB ---', datos);
-    // Simula una respuesta exitosa del servidor tras 1 segundo
-    return of({ mensaje: 'Usuario creado con éxito (Simulado)', status: 201 }).pipe(delay(1000));
+    const datosFormateados = {
+      ...datos,
+      carrera: datos.carrera ? datos.carrera : 'No especificada'
+    };
+    return this.http.post(`${this.API_URL}/registro`, datosFormateados);
   }
 
-  // 2. Simulador para la pantalla de Login
+  // 2. LOGIN INTELIGENTE (Traduce 'usuario' a 'matricula' para el backend)
   iniciarSesion(credenciales: any): Observable<any> {
-    console.log('--- [Simulador AuthService] Validando credenciales ---', credenciales);
-    
-    // De manera simulada, dejamos pasar cualquier login para que puedas ver tu Dashboard
-    return of({ 
-      mensaje: 'Login correcto (Simulado)', 
-      token: 'token-falso-sigataa-2026',
-      usuario: credenciales.usuario 
-    }).pipe(delay(1000));
+    const datosParaBackend = {
+      matricula: credenciales.usuario,    // <-- ¡Aquí está el truco! Traducimos el campo de Abraham
+      contrasena: credenciales.contrasena // Coincide idéntico con tu backend
+    };
+    return this.http.post(`${this.API_URL}/login`, datosParaBackend);
   }
 }

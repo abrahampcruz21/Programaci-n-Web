@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); // Permite que Angular y Node se hablen sin bloqueos
 const Usuario = require('./models/Usuario'); // Importamos tu molde de usuarios
-const Asesoria = require('./models/Asesoria'); // 🌟 IMPORTACIÓN CLAVE: Tu molde de asesorías (Agregado por Adair)
+const Asesoria = require('./models/Asesoria'); //  IMPORTACIÓN CLAVE: Tu molde de asesorías (Agregado por Adair)
 
 const app = express();
 const PORT = 3000;
@@ -17,7 +17,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/sigataa_db')
     .catch((error) => console.error('Error al conectar a MongoDB:', error));
 
 // ===================================================================
-// 🚀 RUTA 1: REGISTRO INTELIGENTE (SEPARA ALUMNOS, PROFESORES Y CARRERAS)
+//  RUTA 1: REGISTRO INTELIGENTE (SEPARA ALUMNOS, PROFESORES Y CARRERAS)
 // ===================================================================
 app.post('/api/registro', async (req, res) => {
     try {
@@ -78,10 +78,52 @@ app.post('/api/registro', async (req, res) => {
 });
 
 // ===================================================================
-// 📅 RUTA 2: MÓDULO DE HORARIOS Y ASESORÍAS (¡TU PARTE, ADAIR! CRUD COMPLETO)
+//  RUTA NUEVA: LOGIN / INICIO DE SESIÓN CON VALIDACIÓN EN BD
+// ===================================================================
+app.post('/api/login', async (req, res) => {
+    try {
+        const { matricula, contrasena } = req.body;
+
+        // 1. Validar que vengan ambos campos llenos
+        if (!matricula || !contrasena) {
+            return res.status(400).json({ mensaje: 'Por favor, introduce tu matrícula y contraseña.' });
+        }
+
+        // 2. Buscar al usuario en MongoDB por su matrícula
+        const usuario = await Usuario.findOne({ matricula });
+
+        //  CONTROL DE ERRORES: Si no existe el usuario en la base de datos
+        if (!usuario) {
+            return res.status(404).json({ mensaje: 'Error: Esta matrícula no se encuentra registrada antes.' });
+        }
+
+        // 3. Validar si la contraseña coincide directamente
+        if (usuario.contrasena !== contrasena) {
+            return res.status(401).json({ mensaje: 'Contraseña incorrecta. Inténtalo de nuevo.' });
+        }
+
+        // 4. Si la matrícula existe y la contraseña es correcta, damos acceso exitoso
+        res.status(200).json({
+            mensaje: '¡Inicio de sesión exitoso!',
+            usuario: {
+                nombreCompleto: usuario.nombreCompleto,
+                matricula: usuario.matricula,
+                rol: usuario.rol,
+                carrera: usuario.carrera
+            }
+        });
+
+    } catch (error) {
+        console.error('Error en el login:', error);
+        res.status(500).json({ mensaje: 'Hubo un error interno en el servidor al intentar iniciar sesión.' });
+    }
+});
+
+// ===================================================================
+// 📅RUTA 2: MÓDULO DE HORARIOS Y ASESORÍAS (¡TU PARTE, ADAIR! CRUD COMPLETO)
 // ===================================================================
 
-// 👉 OPERACIÓN CRUD 1: AGENDAR UNA NUEVA ASESORÍA (CREATE)
+//  OPERACIÓN CRUD 1: AGENDAR UNA NUEVA ASESORÍA (CREATE)
 app.post('/api/asesorias', async (req, res) => {
     try {
         const { alumnoMatricula, profesorNombre, materia, fechaHora } = req.body;
@@ -110,7 +152,7 @@ app.post('/api/asesorias', async (req, res) => {
     }
 });
 
-// 👉 OPERACIÓN CRUD 2: CONSULTAR LAS ASESORÍAS (READ)
+//  OPERACIÓN CRUD 2: CONSULTAR LAS ASESORÍAS (READ)
 app.get('/api/asesorias', async (req, res) => {
     try {
         const listaAsesorias = await Asesoria.find();
@@ -121,7 +163,7 @@ app.get('/api/asesorias', async (req, res) => {
     }
 });
 
-// 👉 OPERACIÓN CRUD 3: ACTUALIZAR EL ESTADO DE UNA ASESORÍA (UPDATE)
+//  OPERACIÓN CRUD 3: ACTUALIZAR EL ESTADO DE UNA ASESORÍA (UPDATE)
 app.put('/api/asesorias/:id', async (req, res) => {
     try {
         const { id } = req.params; // ID que viene en la URL
@@ -134,7 +176,7 @@ app.put('/api/asesorias/:id', async (req, res) => {
         );
 
         if (!asesoriaActualizada) {
-            return res.status(404).json({ mensaje: 'No se encontró la asesoría especificada.' });
+            return res.status(404).json({ mensaje: 'No se encontró la asesoría específica.' });
         }
 
         res.status(200).json({
@@ -148,7 +190,7 @@ app.put('/api/asesorias/:id', async (req, res) => {
     }
 });
 
-// 👉 OPERACIÓN CRUD 4: ELIMINAR / CANCELAR UNA ASESORÍA (DELETE)
+//  OPERACIÓN CRUD 4: ELIMINAR / CANCELAR UNA ASESORÍA (DELETE)
 app.delete('/api/asesorias/:id', async (req, res) => {
     try {
         const { id } = req.params;
