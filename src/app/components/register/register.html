@@ -12,7 +12,7 @@
         </div>
 
         <!-- Se añade el evento de envío aquí para enlazarlo con tu lógica -->
-        <form class="register-form" (ngSubmit)="alEnviarFormulario()">
+        <form class="register-form" (ngSubmit)="registrarUsuario()">
             <input type="text" name="nombre" placeholder="Nombre Completo" [(ngModel)]="datos.nombreCompleto" required>
             <input type="text" name="matricula" placeholder="Matrícula / No. de Empleado" [(ngModel)]="datos.matricula" required>
             <input type="email" name="email" placeholder="Correo Electrónico" [(ngModel)]="datos.correoElectronico" required>
