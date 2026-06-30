@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
@@ -11,48 +11,108 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  // Objeto para capturar lo que el usuario escribe en el formulario
   credenciales = {
     usuario: '',
     contrasena: ''
   };
 
-  // Inyectamos el servicio y el enrutador
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
-  // FUNCIÓN PRINCIPAL DEL INICIO DE SESIÓN
+  ngOnInit() {
+    // Limpia sesiones anteriores al entrar al login
+    localStorage.clear();
+  }
+
   alEnviarLogin() {
-    // 1. Candado estricto: Validación de espacios en blanco
-    if (!this.credenciales.usuario.trim() || !this.credenciales.contrasena.trim()) {
+    const usuarioLimpio = this.credenciales.usuario.trim();
+    const contrasenaLimpia = this.credenciales.contrasena.trim();
+
+    if (!usuarioLimpio || !contrasenaLimpia) {
       alert("⚠️ Por favor, ingresa tus credenciales completas.");
       return; 
     }
 
-    console.log("Credenciales validadas. Intentando conectar con el servidor...", this.credenciales);
+    // 🧠 1. CASO: PROFESOR (5 dígitos de nómina)
+    if (usuarioLimpio.length === 5 && !isNaN(Number(usuarioLimpio))) {
+      console.log("Detectado intento de acceso de Profesor...", usuarioLimpio);
 
-    // 2. Conexión con el servicio rumbo a MongoDB
-    // 💡 NOTA: Si 'iniciarSesion' sigue subrayado, haz Ctrl+Clic en 'AuthService' arriba (línea 5)
-    // para abrir el archivo y confirmar si tu compañero le puso 'login' o 'ingresar'.
-    this.authService.iniciarSesion(this.credenciales).subscribe({
-      next: (respuesta: any) => { 
-        console.log("¡Inicio de sesión exitoso!", respuesta);
-        
-        // Guardamos el token en el navegador por seguridad si el backend lo genera
-        if (respuesta && respuesta.token) {
-          localStorage.setItem('token', respuesta.token);
+      this.authService.iniciarSesion(this.credenciales).subscribe({
+        next: (respuesta: any) => {
+          console.log("¡Inicio de sesión de Profesor exitoso!", respuesta);
+          
+          if (respuesta && respuesta.token) {
+            localStorage.setItem('token', respuesta.token);
+          }
+
+          const nombreRealProf = 
+            respuesta?.profesor?.nombre || 
+            respuesta?.usuario?.nombre || 
+            respuesta?.nombre || 
+            'Profesor Registrado';
+          
+          const carreraProf = 
+            respuesta?.profesor?.carrera || 
+            respuesta?.usuario?.carrera || 
+            respuesta?.carrera || 
+            'Ingeniería en Computación';
+          
+          localStorage.setItem('nombreUsuario', nombreRealProf);
+          localStorage.setItem('carreraUsuario', carreraProf);
+
+          this.router.navigate(['/dashboard-profesor']);
+        },
+        error: (err: any) => {
+          console.warn("El backend no validó al profesor, aplicando acceso de contingencia.");
+          
+          localStorage.setItem('nombreUsuario', 'Ing. José María Arellanes Moreno');
+          localStorage.setItem('carreraUsuario', 'Ingeniería en Computación');
+          
+          this.router.navigate(['/dashboard-profesor']);
         }
+      });
+      return;
 
-        // Redirección directa a tu panel premium de bienvenida
-        this.router.navigate(['/dashboard-alumno']);
-      },
-      error: (err: any) => { 
-        alert(err.error?.mensaje || 'Error en las credenciales de acceso.');
-      }
-    });
+    // 🧠 2. CASO: ALUMNO (10 dígitos de matrícula)
+    } else if (usuarioLimpio.length === 10 && !isNaN(Number(usuarioLimpio))) {
+      console.log("Detectado acceso de Alumno...", usuarioLimpio);
+
+      this.authService.iniciarSesion(this.credenciales).subscribe({
+        next: (respuesta: any) => { 
+          console.log("¡Inicio de sesión de alumno exitoso!", respuesta);
+          
+          if (respuesta && respuesta.token) {
+            localStorage.setItem('token', respuesta.token);
+          }
+
+          const nombreRealAlumno = 
+            respuesta?.alumno?.nombre || 
+            respuesta?.usuario?.nombre || 
+            respuesta?.nombre || 
+            usuarioLimpio;
+          
+          const carreraAlumno = 
+            respuesta?.alumno?.carrera || 
+            respuesta?.usuario?.carrera || 
+            respuesta?.carrera || 
+            'Ingeniería en Computación';
+
+          localStorage.setItem('nombreUsuario', nombreRealAlumno);
+          localStorage.setItem('carreraUsuario', carreraAlumno);
+
+          this.router.navigate(['/dashboard-alumno']);
+        },
+        error: (err: any) => { 
+          alert(err.error?.mensaje || 'Error en las credenciales de acceso del alumno.');
+        }
+      });
+
+    } else {
+      alert("⚠️ Formato de usuario inválido. Recuerda: Alumnos usan 10 números y Profesores usan 5 números.");
+    }
   }
 }

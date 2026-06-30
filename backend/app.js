@@ -34,7 +34,7 @@ app.post('/api/registro', async (req, res) => {
             return res.status(400).json({ mensaje: 'Esta matrícula ya está registrada.' });
         }
 
-        // ✨ 3. DETECTAR ROL POR LONGITUD DE MATRÍCULA Y ASIGNAR CARRERA
+        //  3. DETECTAR ROL POR LONGITUD DE MATRÍCULA Y ASIGNAR CARRERA
         let rolAsignado = 'alumno'; // Por defecto
         let carreraAsignada = carrera;
 
@@ -120,7 +120,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 // ===================================================================
-// 📅RUTA 2: MÓDULO DE HORARIOS Y ASESORÍAS (¡TU PARTE, ADAIR! CRUD COMPLETO)
+// RUTA 2: MÓDULO DE HORARIOS Y ASESORÍAS (¡TU PARTE, ADAIR! CRUD COMPLETO)
 // ===================================================================
 
 //  OPERACIÓN CRUD 1: AGENDAR UNA NUEVA ASESORÍA (CREATE)

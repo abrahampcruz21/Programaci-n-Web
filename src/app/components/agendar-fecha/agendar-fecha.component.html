@@ -1,0 +1,43 @@
+<div class="calendario-header">
+  <h1>AGENDAR FECHA</h1>
+  <p class="profesor-sub">Profesor: <strong>{{ nombreProfesor }}</strong> ({{ gradoAcademico }})</p>
+</div>
+
+<div class="calendario-container">
+  <div class="horarios-grid">
+    <div *ngFor="let bloque of bloquesHorario" 
+         class="bloque-card" 
+         [ngClass]="{
+           'disponible': bloque.estado === 'disponible',
+           'exito-azul': bloque.estado === 'asignado',
+           'error-rojo': bloque.estado === 'denegado' || bloque.esReceso
+         }"
+         (click)="solicitarAsesorica(bloque)">
+      <span class="dia-text">{{ bloque.dia }}</span>
+      <span class="hora-text">{{ bloque.hora }}</span>
+      <span class="receso-tag" *ngIf="bloque.esReceso">Receso Docente</span>
+    </div>
+  </div>
+
+  <div class="botones-inferiores">
+    <button class="time-pill">09:00</button>
+    <button class="time-pill">11:00</button>
+    <button class="time-pill">14:00</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="mostrarExito">
+  <div class="modal-box azul">
+    <h2>¡Solicitud Recibida!</h2>
+    <p>Tu solicitud fue asignada con éxito.</p>
+    <button class="btn-cerrar" (click)="cerrarAlerta()">Aceptar</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="mostrarError">
+  <div class="modal-box rojo">
+    <h2>Profesor No Disponible</h2>
+    <p>Selecciona un horario diferente, tu profesor no está disponible.</p>
+    <button class="btn-cerrar" (click)="cerrarAlerta()">Regresar</button>
+  </div>
+</div>

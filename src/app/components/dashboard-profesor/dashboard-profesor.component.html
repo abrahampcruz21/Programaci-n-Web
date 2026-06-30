@@ -1,0 +1,74 @@
+<div class="overlay"></div>
+
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <h1 class="panel-title">PANEL DEL PROFESOR</h1>
+        <div class="welcome-bar">
+            <span>Bienvenido, {{ nombreProfesor }}</span>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <section class="panel-section">
+            <h2><i class="icon">🔔</i> Solicitudes de Asesorías</h2>
+            <div class="cards-grid">
+                @for (solicitud of solicitudes; track solicitud.id) {
+                    <div class="info-card-prof">
+                        <h3>{{ solicitud.alumno }}</h3>
+                        <p><strong>Materia:</strong> {{ solicitud.materia }}</p>
+                        <p><strong>Fecha/Hora:</strong> {{ solicitud.fecha }}</p>
+                        <div class="action-buttons">
+                            <button class="btn-confirmar" (click)="confirmarAsesoria(solicitud.id)">✓ Confirmar</button>
+                            <button class="btn-rechazar" (click)="abrirModalRechazo(solicitud)">✗ Rechazar</button>
+                        </div>
+                    </div>
+                } @empty {
+                    <p class="no-data">No tienes solicitudes pendientes por el momento.</p>
+                }
+            </div>
+        </section>
+
+        <div class="two-columns-grid">
+            <section class="panel-section">
+                <h2><i class="icon">👥</i> Alumnos Asignados (Tutorados)</h2>
+                <ul class="lista-alumnos">
+                    @for (alumno of alumnosAsignados; track alumno) {
+                        <li>{{ alumno }}</li>
+                    }
+                </ul>
+            </section>
+
+            <section class="panel-section">
+                <h2><i class="icon">📅</i> Citas de Asesoramiento Confirmadas</h2>
+                <div class="citas-lista">
+                    @for (cita of citasConfirmadas; track cita.id) {
+                        <div class="cita-item">
+                            <strong>{{ cita.alumno }}</strong> - {{ cita.materia }}
+                            <span class="fecha-tag">{{ cita.fecha }}</span>
+                        </div>
+                    } @empty {
+                        <p class="no-data">No hay asesorías agendadas para hoy.</p>
+                    }
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+@if (mostrarModal) {
+    <div class="modal-backdrop">
+        <div class="modal-content">
+            <h3>Motivo del Rechazo</h3>
+            <p>Por favor, justifica el motivo del rechazo para notificar al alumno:</p>
+            <textarea [(ngModel)]="motivoRechazo" placeholder="Escribe aquí el motivo (ej. Cruce de horario, Cubo ocupado...)"></textarea>
+            <div class="modal-actions">
+                <button class="btn-cancelar" (click)="cerrarModalRechazo()">Cancelar</button>
+                <button class="btn-enviar-rechazo" (click)="confirmarRechazoFinal()">Enviar Rechazo</button>
+            </div>
+        </div>
+    </div>
+}
+
+<footer class="footer-banner">
+    &copy; 2026 SIGATAA.
+</footer>

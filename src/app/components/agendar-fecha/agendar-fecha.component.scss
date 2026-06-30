@@ -1,0 +1,87 @@
+.calendario-header {
+  padding: 20px;
+  text-align: left;
+  h1 { font-family: sans-serif; font-weight: 300; margin-left: 50px; margin-bottom: 5px; }
+  .profesor-sub { margin-left: 50px; color: #666; font-size: 1.1rem; }
+}
+
+.calendario-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 30px;
+}
+
+// Recreación exacta de la cuadrícula de la imagen 1000145978.jpg
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); // Lunes a Viernes
+  gap: 15px;
+  width: 90%;
+}
+
+.bloque-card {
+  background: #e0e0e0; // Gris original de la imagen
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 80px;
+  transition: transform 0.2s;
+
+  &:hover { transform: scale(1.02); }
+
+  .dia-text { font-size: 0.85rem; color: #777; font-weight: bold; text-transform: uppercase; }
+  .hora-text { font-size: 1.1rem; font-weight: bold; margin-top: 5px; }
+  .receso-tag { font-size: 0.7rem; color: #fff; background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 10px; margin-top: 5px; }
+
+  // REGLAS DE COLOR SOLICITADAS
+  &.exito-azul { background: #3498db !important; color: white; .dia-text { color: #eaf2f8; } }
+  &.error-rojo { background: #e74c3c !important; color: white; .dia-text { color: #fadbd8; } cursor: not-allowed; }
+}
+
+.botones-inferiores {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+
+  .time-pill {
+    background: #00bcd4; // Azul cian de tus botones inferiores de la imagen
+    color: white;
+    border: none;
+    padding: 10px 35px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}
+
+// ESTILOS DE MODALES EMERGENTES
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white; padding: 30px; border-radius: 12px;
+  text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  width: 350px;
+
+  h2 { margin-top: 0; }
+  p { color: #555; margin-bottom: 25px; }
+  
+  .btn-cerrar {
+    padding: 10px 25px; border: none; border-radius: 6px;
+    color: white; font-weight: bold; cursor: pointer;
+  }
+
+  &.azul { border-top: 8px solid #3498db; h2 { color: #3498db; } .btn-cerrar { background: #3498db; } }
+  &.rojo { border-top: 8px solid #e74c3c; h2 { color: #e74c3c; } .btn-cerrar { background: #e74c3c; } }
+}
