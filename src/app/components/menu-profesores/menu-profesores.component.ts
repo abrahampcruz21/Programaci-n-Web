@@ -12,10 +12,10 @@ import { RouterModule } from '@angular/router';
 })
 export class MenuProfesoresComponent {
 
-  // Función agregada para solucionar el error de compilación NG9 de tu HTML
+ 
   irAHorario(nombre: string, carrera: string) {
     console.log("Navegando al horario del profesor:", nombre, carrera);
-    // Lógica de navegación o redirección pendiente
+    
   }
 
 }

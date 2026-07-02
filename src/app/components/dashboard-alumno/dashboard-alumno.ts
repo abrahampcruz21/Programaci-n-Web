@@ -11,18 +11,17 @@ interface InformacionCarrera {
   selector: 'app-dashboard-alumno',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './dashboard-alumno.html',  // 👈 Apunta a tu archivo dashboard-alumno.html sin el ".component"
-  styleUrls: ['./dashboard-alumno.scss']     // 👈 Apunta a tu archivo dashboard-alumno.scss sin el ".component"
+  templateUrl: './dashboard-alumno.html',  
+  styleUrls: ['./dashboard-alumno.scss']    
 })
 export class DashboardAlumnoComponent implements OnInit {
   
-  nombreAlumno: string = 'Alumno'; 
+  nombreAlumno: string = ''; 
   carreraAlumno: string = 'Ingeniería en Computación';
   
   objetivoCarrera: string = '';
   perfilEgreso: string = '';
 
-  // Datos lógicos del Tutor (Requisito del manual SIGATAA)
   nombreTutor: string = 'Ing. José María Arellanes Moreno';
   edificioTutor: string = 'Edificio Alfa';
   cuboTutor: string = 'Cubo 12';
@@ -54,33 +53,50 @@ export class DashboardAlumnoComponent implements OnInit {
     },
     'Ingeniería en Diseño': {
       objetivo: 'Formar profesionales capaces de crear productos, servicios y experiencias funcionales, innovadoras y centradas en el usuario.',
-      perfil: 'Diseñador con habilidades para desarrollar soluciones creativas e integrando estética, funcionalidad, tecnología y sostenibilidad.'
+      perfil: 'Diseñador con habilidades para desarrollar soluciones creative e integrando estética, funcionalidad, tecnología y sostenibilidad.'
     }
   };
 
   ngOnInit() {
-    this.recuperarUsuario();
-    this.cargarInformacionDeCarrera();
+   // this.recuperarUsuarios();
+    this.cargarDatosUsuarioYPerfil();
   }
 
-  recuperarUsuario() {
+ /* recuperarUsuarios(){
+    
     const usuarioGuardado = localStorage.getItem('nombreUsuario');
-    if (usuarioGuardado) {
-      const limpio = usuarioGuardado.trim();
-      if (!isNaN(Number(limpio))) {
-        this.nombreAlumno = 'Angel Adair';
-      } else {
-        this.nombreAlumno = limpio.split(' ')[0];
-      }
-    } else {
-      this.nombreAlumno = 'Angel Adair';
-    }
-  }
 
-  cargarInformacionDeCarrera() {
-    const carreraGuardada = localStorage.getItem('carreraUsuario');
-    if (carreraGuardada) {
-      this.carreraAlumno = carreraGuardada;
+    if(usuarioGuardado){
+      const limpio = usuarioGuardado.trim();
+
+      if (!isNaN(Number(limpio))){
+        this.nombreAlumno = 'nombreAlumno';
+      }else{
+        this.nombreAlumno = limpio;
+      }
+    }else{
+      this.nombreAlumno = 'Usuario'
+    }
+  }*/
+
+  cargarDatosUsuarioYPerfil() {
+    const usuarioGuardado = localStorage.getItem('usuario');
+
+    if (usuarioGuardado) {
+      try {
+        const datosUsuario = JSON.parse(usuarioGuardado);
+
+        if (datosUsuario && datosUsuario.nombre) {
+          this.nombreAlumno = datosUsuario.nombre.trim();
+        }
+
+        if (datosUsuario && datosUsuario.carrera) {
+          this.carreraAlumno = datosUsuario.carrera.trim();
+        }
+
+      } catch (e) {
+        console.error('Error al parsear el objeto de sesión de usuario:', e);
+      }
     }
 
     const datos = this.infoCarreras[this.carreraAlumno];
@@ -92,7 +108,6 @@ export class DashboardAlumnoComponent implements OnInit {
       this.perfilEgreso = 'Profesional competente con visión innovadora, ética y herramientas analíticas aplicadas a su área de especialización.';
     }
 
-    // Asignación lógica de tutor según la carrera
     if (this.carreraAlumno.includes('Industrial')) {
       this.nombreTutor = 'Dra. María Elena López';
       this.edificioTutor = 'Edificio Beta';
@@ -102,7 +117,6 @@ export class DashboardAlumnoComponent implements OnInit {
       this.edificioTutor = 'Edificio Gamma';
       this.cuboTutor = 'Cubo 8';
     } else {
-      // Computación por defecto
       this.nombreTutor = 'Ing. José María Arellanes Moreno';
       this.edificioTutor = 'Edificio Alfa';
       this.cuboTutor = 'Cubo 12';

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Limpia sesiones anteriores al entrar al login
+    
     localStorage.clear();
   }
 
@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
       return; 
     }
 
-    // 🧠 1. CASO: PROFESOR (5 dígitos de nómina)
     if (usuarioLimpio.length === 5 && !isNaN(Number(usuarioLimpio))) {
       console.log("Detectado intento de acceso de Profesor...", usuarioLimpio);
 
@@ -50,34 +49,32 @@ export class LoginComponent implements OnInit {
           }
 
           const nombreRealProf = 
-            respuesta?.profesor?.nombre || 
             respuesta?.usuario?.nombre || 
-            respuesta?.nombre || 
-            'Profesor Registrado';
+            respuesta?.profesor?.nombre || 
+            respuesta?.nombre;
           
           const carreraProf = 
-            respuesta?.profesor?.carrera || 
             respuesta?.usuario?.carrera || 
+            respuesta?.profesor?.carrera || 
             respuesta?.carrera || 
             'Ingeniería en Computación';
           
           localStorage.setItem('nombreUsuario', nombreRealProf);
           localStorage.setItem('carreraUsuario', carreraProf);
 
+          const usuarioSesion = { nombre: nombreRealProf, carrera: carreraProf };
+          localStorage.setItem('usuario', JSON.stringify(usuarioSesion));
+
           this.router.navigate(['/dashboard-profesor']);
         },
         error: (err: any) => {
-          console.warn("El backend no validó al profesor, aplicando acceso de contingencia.");
+          console.error("Acceso denegado. El profesor no existe en la BD:", err);
           
-          localStorage.setItem('nombreUsuario', 'Ing. José María Arellanes Moreno');
-          localStorage.setItem('carreraUsuario', 'Ingeniería en Computación');
-          
-          this.router.navigate(['/dashboard-profesor']);
+          alert(err.error?.mensaje || '⚠️ Error: No se encontró ningún profesor registrado con esos datos.');
         }
       });
       return;
 
-    // 🧠 2. CASO: ALUMNO (10 dígitos de matrícula)
     } else if (usuarioLimpio.length === 10 && !isNaN(Number(usuarioLimpio))) {
       console.log("Detectado acceso de Alumno...", usuarioLimpio);
 
@@ -87,13 +84,15 @@ export class LoginComponent implements OnInit {
           
           if (respuesta && respuesta.token) {
             localStorage.setItem('token', respuesta.token);
+          } else {
+            localStorage.setItem('token', 'token_temporal_seguro'); 
           }
 
           const nombreRealAlumno = 
             respuesta?.alumno?.nombre || 
             respuesta?.usuario?.nombre || 
             respuesta?.nombre || 
-            usuarioLimpio;
+            usuarioLimpio; 
           
           const carreraAlumno = 
             respuesta?.alumno?.carrera || 
@@ -104,9 +103,18 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('nombreUsuario', nombreRealAlumno);
           localStorage.setItem('carreraUsuario', carreraAlumno);
 
+          const usuarioSesion = { 
+            nombre: nombreRealAlumno, 
+            carrera: carreraAlumno 
+          };
+          localStorage.setItem('nombreUsuario', usuarioSesion.nombre);
+          localStorage.setItem('carreraUsuario', usuarioSesion.carrera);
+          localStorage.setItem('usuario', JSON.stringify(usuarioSesion));
+
           this.router.navigate(['/dashboard-alumno']);
         },
         error: (err: any) => { 
+          console.error("Error detectado en el botón de Login:", err);
           alert(err.error?.mensaje || 'Error en las credenciales de acceso del alumno.');
         }
       });

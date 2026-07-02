@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common'; // 👈 Esto evita que la pantalla se quede congelada
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-agendar-fecha',
   standalone: true,
-  imports: [CommonModule], // 👈 Aseguramos que carguen los bloques grises
+  imports: [CommonModule], 
   templateUrl: './agendar-fecha.component.html',
   styleUrls: ['./agendar-fecha.component.scss']
 })
@@ -20,12 +20,12 @@ export class AgendarFechaComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Escuchamos si viene un profesor por la URL, si no, se queda como General
+    
     this.route.queryParams.subscribe(params => {
       this.nombreProfesor = params['nombre'] || 'General';
       this.gradoAcademico = params['grado'] || 'Maestría';
       
-      // Limpiamos la matriz antes de generarla para que no se duplique
+      
       this.bloquesHorario = [];
       this.generarMatrizHorarios();
     });
@@ -40,7 +40,7 @@ export class AgendarFechaComponent implements OnInit {
         const horaNum = parseInt(h.split(':')[0]);
         let esReceso = false;
 
-        // Reglas de receso automáticas
+        
         if (this.gradoAcademico === 'Maestría' && horaNum === 14) {
           esReceso = true; // Bloquea 2:00 PM
         } else if (this.gradoAcademico === 'Doctorado' && (horaNum === 14 || horaNum === 15)) {

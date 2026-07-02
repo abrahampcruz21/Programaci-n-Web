@@ -5,8 +5,8 @@ import { LoginComponent } from './components/login/login';
 import { DashboardAlumnoComponent } from './components/dashboard-alumno/dashboard-alumno';
 import { MenuProfesoresComponent } from './components/menu-profesores/menu-profesores.component';
 import { AgendarFechaComponent } from './components/agendar-fecha/agendar-fecha.component';
-// 🔥 NUEVA IMPORTACIÓN DEL PANEL DE PROFESOR:
 import { DashboardProfesorComponent } from './components/dashboard-profesor/dashboard-profesor.component';
+import { authGuard } from './auth.guard'; 
 
 export const routes: Routes = [
   {
@@ -21,23 +21,28 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+  
   { 
     path: 'dashboard-alumno', 
-    component: DashboardAlumnoComponent
+    component: DashboardAlumnoComponent,
+    canActivate: [authGuard] 
   },
   {
     path: 'menu-profesores',
-    component: MenuProfesoresComponent
+    component: MenuProfesoresComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'agendar-fecha',
-    component: AgendarFechaComponent
+    component: AgendarFechaComponent,
+    canActivate: [authGuard]
   },
-  // 🔥 NUEVA RUTA CONECTADA PARA EL PROFESOR:
   {
     path: 'dashboard-profesor',
-    component: DashboardProfesorComponent
+    component: DashboardProfesorComponent,
+    canActivate: [authGuard]
   },
+
   { 
     path: '**', 
     redirectTo: '/login', 

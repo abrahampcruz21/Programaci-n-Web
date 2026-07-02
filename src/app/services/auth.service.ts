@@ -11,7 +11,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  // 1. REGISTRO AUTOMÁTICO (Guarda al alumno directamente en MongoDB)
   registrarUsuario(datos: any): Observable<any> {
     const datosFormateados = {
       ...datos,
@@ -20,11 +19,10 @@ export class AuthService {
     return this.http.post(`${this.API_URL}/registro`, datosFormateados);
   }
 
-  // 2. LOGIN INTELIGENTE (Traduce 'usuario' a 'matricula' para el backend)
   iniciarSesion(credenciales: any): Observable<any> {
     const datosParaBackend = {
-      matricula: credenciales.usuario,    // <-- ¡Aquí está el truco! Traducimos el campo de Abraham
-      contrasena: credenciales.contrasena // Coincide idéntico con tu backend
+      matricula: credenciales.usuario,   
+      contrasena: credenciales.contrasena
     };
     return this.http.post(`${this.API_URL}/login`, datosParaBackend);
   }

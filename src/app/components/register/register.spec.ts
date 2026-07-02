@@ -11,8 +11,8 @@ describe('RegisterComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RegisterComponent],
       providers: [
-        provideHttpClient(), // Soporte para la base de datos
-        provideRouter([])    // Soporte para los enlaces de navegación de Abraham
+        provideHttpClient(), 
+        provideRouter([])   
       ]
     }).compileComponents();
 
